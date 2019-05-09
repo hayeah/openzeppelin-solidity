@@ -1,3 +1,5 @@
+# How To Run Truffle on Qtum
+
 Janus is a RPC compatibility layer that transforms Ethereum RPC calls to QTUM
 RPC calls. This allows popular DApp libraries such as Truffle and Web3 to be used on QTUM.
 
