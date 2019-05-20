@@ -45,7 +45,7 @@ The `janus` binary should be available at project root.
 
 Run Qtum RPC (in regtest mode) on port 3889:
 
-```
+```bash
 qtumd -regtest \
  -rpcbind=0.0.0.0:3889 -rpcallowip=0.0.0.0/0 \
  -datadir=.qtum \
@@ -63,22 +63,31 @@ QTUM_RPC=http://qtum:testpasswd@localhost:3889 QTUM_NETWORK=regtest janus --dev
 
 # Create Test Accounts
 
-Let's generate some test accounts, and fund them.
+Create an alias to invoke qtum-cli with the specified RPC credentials:
 
 ```
 alias qcli='.qtum-cli -rpcuser=qtum -rpcpassword=testpasswd'
 ```
 
-Create two test accounts, and fund them by mining 500 blocks:
+Create test accounts, and fund them by mining 500 blocks:
 
 ```
-# addr=qUbxboqjBRp96j3La8D1RYkyqx5uQbJPoW hdkeypath=m/88'/0'/1'
+# qUbxboqjBRp96j3La8D1RYkyqx5uQbJPoW
 qcli importprivkey cMbgxCJrTYUqgcmiC1berh5DFrtY1KeU4PXZ6NZxgenniF1mXCRk
-# addr=qLn9vqbr2Gx3TsVR9QyTVB5mrMoh4x43Uf hdkeypath=m/88'/0'/2'
+# qLn9vqbr2Gx3TsVR9QyTVB5mrMoh4x43Uf
 qcli importprivkey cRcG1jizfBzHxfwu68aMjhy78CpnzD9gJYZ5ggDbzfYD3EQfGUDZ
+# qTCCy8qy7pW94EApdoBjYc1vQ2w68UnXPi
+qcli importprivkey cV79qBoCSA2NDrJz8S3T7J8f3zgkGfg4ua4hRRXfhbnq5VhXkukT
+# qWMi6ne9mDQFatRGejxdDYVUV9rQVkAFGp
+qcli importprivkey cV93kaaV8hvNqZ711s2z9jVWLYEtwwsVpyFeEZCP6otiZgrCTiEW
+# qLcshhsRS6HKeTKRYFdpXnGVZxw96QQcfm
+qcli importprivkey cVPHpTvmv3UjQsZfsMRrW5RrGCyTSAZ3MWs1f8R1VeKJSYxy5uac
 
 qcli generatetoaddress 500 qUbxboqjBRp96j3La8D1RYkyqx5uQbJPoW
 qcli generatetoaddress 500 qLn9vqbr2Gx3TsVR9QyTVB5mrMoh4x43Uf
+qcli generatetoaddress 500 qTCCy8qy7pW94EApdoBjYc1vQ2w68UnXPi
+qcli generatetoaddress 500 qWMi6ne9mDQFatRGejxdDYVUV9rQVkAFGp
+qcli generatetoaddress 500 qLcshhsRS6HKeTKRYFdpXnGVZxw96QQcfm
 ```
 
 Note that the base58 addresses correspond to the following hex addresses
@@ -97,7 +106,7 @@ Now we'll check if Janus is working by making a few ETH RPC calls.
 
 Use the [eth_getbalance](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getbalance) to get their balances.
 
-```
+```json
 curl -X POST -d \
 '{"jsonrpc":"2.0",
  "method":"eth_getBalance",
@@ -111,7 +120,7 @@ curl -X POST -d \
 
 Use [eth_accounts] to list known accounts:
 
-```
+```json
 curl -X POST -d \
 '{"jsonrpc":"2.0",
  "method":"eth_accounts",
@@ -152,12 +161,9 @@ You should see that all test cases passed:
 ```
 Using network 'development'.
 
+# Compiling your contracts...
 
-Compiling your contracts...
-===========================
 > Everything is up to date, there is nothing to compile.
-
-
 
   Contract: Arrays
     Even number of elements
@@ -177,13 +183,12 @@ Compiling your contracts...
     Empty array
       ✓ should always return 0 for empty array
 
-
-  12 passing (3s)
+12 passing (3s)
 ```
 
 And from the Janus log output, you should be able to see the ETH RPC requests and responses:
 
-```
+```json
 => ETH request
 {
   "id": 12,
@@ -210,7 +215,7 @@ And from the Janus log output, you should be able to see the ETH RPC requests an
 
 As well as the QTUM RPC requests and responses:
 
-```
+```json
 => qtum RPC request
 {
   "jsonrpc": "1.0",
