@@ -28,9 +28,9 @@ library ECDSA {
         // currently is to use assembly.
         // solhint-disable-next-line no-inline-assembly
         assembly {
-            r := mload(add(signature, 0x20))
-            s := mload(add(signature, 0x40))
-            v := byte(0, mload(add(signature, 0x60)))
+            v := byte(0, mload(0x00))
+            r := mload(add(signature, 0x21))
+            s := mload(add(signature, 0x41))
         }
 
         // EIP-2 still allows signature malleability for ecrecover(). Remove this possibility and make the signature
@@ -46,12 +46,14 @@ library ECDSA {
             return address(0);
         }
 
-        if (v != 27 && v != 28) {
+        // HY: I think the check for BTC signature is whether v-27 == 4 || v-27 == 5
+        // Oh, it's actually the same. This is check if pubkey is compressed.
+        if (v != 31 && v != 32) {
             return address(0);
         }
 
         // If the signature is valid (and not malleable), return the signer address
-        return ecrecover(hash, v, r, s);
+        return btc_ecrecover(hash, v, r, s);
     }
 
     /**
@@ -64,4 +66,29 @@ library ECDSA {
         // enforced by the type signature above
         return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
     }
+
+    function btc_ecrecover(bytes32 msgh, uint8 v, bytes32 r, bytes32 s) public returns(address)
+    {
+        uint256[4] memory input;
+        input[0] = uint256(msgh);
+        input[1] = v;
+        input[2] = uint256(r);
+        input[3] = uint256(s);
+        address p;
+        assembly
+        {
+            if iszero(call(not(0), 0x85, 0, input, 0x80, p, 20))
+            {
+                revert(0, 0)
+            }
+        }
+        return p;
+    }
+
+    // function toBytes(uint256 x) internal pure returns (bytes memory)
+    // {
+    //     bytes memory b = new bytes(32);
+    //     assembly { mstore(add(b, 32), x) }
+    //     return b;
+    // }
 }
