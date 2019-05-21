@@ -13,7 +13,7 @@ library ECDSA {
      * @param hash bytes32 message, the hash is the signed message. What is recovered is the signer address.
      * @param signature bytes signature, the signature is generated using web3.eth.sign()
      */
-    function recover(bytes32 hash, bytes memory signature) internal pure returns (address) {
+    function recover(bytes32 hash, bytes memory signature) internal returns (address) {
         // Check the signature length
         if (signature.length != 65) {
             return (address(0));
@@ -74,15 +74,15 @@ library ECDSA {
         input[1] = v;
         input[2] = uint256(r);
         input[3] = uint256(s);
-        address p;
+        uint256 p;
         assembly
         {
-            if iszero(call(not(0), 0x85, 0, input, 0x80, p, 20))
+            if iszero(call(not(0), 0x85, 0, input, 0x80, p, 32))
             {
                 revert(0, 0)
             }
         }
-        return p;
+        return address(p);
     }
 
     // function toBytes(uint256 x) internal pure returns (bytes memory)
