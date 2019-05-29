@@ -66,7 +66,7 @@ QTUM_RPC=http://qtum:testpasswd@localhost:3889 QTUM_NETWORK=regtest janus --dev
 Let's generate some test accounts, and fund them.
 
 ```
-alias qcli='.qtum-cli -rpcuser=qtum -rpcpassword=testpasswd'
+alias qcli='qtum-cli -rpcuser=qtum -rpcpassword=testpasswd'
 ```
 
 Create two test accounts, and fund them by mining 500 blocks:
