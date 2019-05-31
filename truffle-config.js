@@ -22,7 +22,7 @@ module.exports = {
     },
     // development: {
     //   host: '127.0.0.1',
-    //   port: 8545, // janus QTUM-ETH RPC bridge
+    //   port: 8545, // ganache
     //   network_id: '*', // eslint-disable-line camelcase
     //   // from: '0x7926223070547d2d15b2ef5e7383e541c338ffe9',
     //   // gasPrice: '0x64', // minimal gas for qtum
