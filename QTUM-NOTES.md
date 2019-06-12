@@ -82,12 +82,15 @@ qcli importprivkey cV79qBoCSA2NDrJz8S3T7J8f3zgkGfg4ua4hRRXfhbnq5VhXkukT
 qcli importprivkey cV93kaaV8hvNqZ711s2z9jVWLYEtwwsVpyFeEZCP6otiZgrCTiEW
 # qLcshhsRS6HKeTKRYFdpXnGVZxw96QQcfm
 qcli importprivkey cVPHpTvmv3UjQsZfsMRrW5RrGCyTSAZ3MWs1f8R1VeKJSYxy5uac
+# qW28njWueNpBXYWj2KDmtFG2gbLeALeHfV
+qcli importprivkey cTs5NqY4Ko9o6FESHGBDEG77qqz9me7cyYCoinHcWEiqMZgLC6XY
 
 qcli generatetoaddress 500 qUbxboqjBRp96j3La8D1RYkyqx5uQbJPoW
 qcli generatetoaddress 500 qLn9vqbr2Gx3TsVR9QyTVB5mrMoh4x43Uf
 qcli generatetoaddress 500 qTCCy8qy7pW94EApdoBjYc1vQ2w68UnXPi
 qcli generatetoaddress 500 qWMi6ne9mDQFatRGejxdDYVUV9rQVkAFGp
 qcli generatetoaddress 500 qLcshhsRS6HKeTKRYFdpXnGVZxw96QQcfm
+qcli generatetoaddress 500 qW28njWueNpBXYWj2KDmtFG2gbLeALeHfV
 ```
 
 Note that the base58 addresses correspond to the following hex addresses
