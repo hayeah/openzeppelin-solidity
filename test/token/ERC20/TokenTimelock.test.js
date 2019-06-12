@@ -1,7 +1,7 @@
 const { BN, shouldFail, time } = require('openzeppelin-test-helpers');
 
 const ERC20Mintable = artifacts.require('ERC20Mintable');
-const TokenTimelock = artifacts.require('TokenTimelock');
+const TokenTimelock = artifacts.require('TokenTimelockMock');
 
 contract('TokenTimelock', function ([_, minter, beneficiary]) {
   const amount = new BN(100);
@@ -13,9 +13,7 @@ contract('TokenTimelock', function ([_, minter, beneficiary]) {
 
     it('rejects a release time in the past', async function () {
       const pastReleaseTime = (await time.latest()).sub(time.duration.years(1));
-      await shouldFail.reverting.withMessage(
-        TokenTimelock.new(this.token.address, beneficiary, pastReleaseTime)
-      );
+      await shouldFail.reverting.withMessage(TokenTimelock.new(this.token.address, beneficiary, pastReleaseTime));
     });
 
     context('once deployed', function () {
@@ -36,24 +34,26 @@ contract('TokenTimelock', function ([_, minter, beneficiary]) {
       });
 
       it('cannot be released just before time limit', async function () {
-        await time.increaseTo(this.releaseTime.sub(time.duration.seconds(3)));
+        // NOTE: qtum's regtests does not support tweaking the clock
+        // await time.increaseTo(this.releaseTime.sub(time.duration.seconds(3)));
+        await this.timelock.setBeforeReleaseTimeForTest();
         await shouldFail.reverting.withMessage(this.timelock.release());
       });
 
       it('can be released just after limit', async function () {
-        await time.increaseTo(this.releaseTime.add(time.duration.seconds(1)));
-        await this.timelock.release();
-        (await this.token.balanceOf(beneficiary)).should.be.bignumber.equal(amount);
-      });
+        // NOTE: qtum's regtests does not support tweaking the clock
+        // await time.increaseTo(this.releaseTime.add(time.duration.seconds(1)));
 
-      it('can be released after time limit', async function () {
-        await time.increaseTo(this.releaseTime.add(time.duration.years(1)));
+        await this.timelock.setImmediateReleaseForTest();
+
         await this.timelock.release();
         (await this.token.balanceOf(beneficiary)).should.be.bignumber.equal(amount);
       });
 
       it('cannot be released twice', async function () {
-        await time.increaseTo(this.releaseTime.add(time.duration.years(1)));
+        // await time.increaseTo(this.releaseTime.add(time.duration.years(1)));
+        await this.timelock.setImmediateReleaseForTest();
+
         await this.timelock.release();
         await shouldFail.reverting.withMessage(this.timelock.release());
         (await this.token.balanceOf(beneficiary)).should.be.bignumber.equal(amount);

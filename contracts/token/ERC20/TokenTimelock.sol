@@ -17,7 +17,7 @@ contract TokenTimelock {
     address private _beneficiary;
 
     // timestamp when token release is enabled
-    uint256 private _releaseTime;
+    uint256 _releaseTime;
 
     constructor (IERC20 token, address beneficiary, uint256 releaseTime) public {
         // solhint-disable-next-line not-rely-on-time
