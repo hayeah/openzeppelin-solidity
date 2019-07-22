@@ -21,25 +21,9 @@ Raise issues if you run into API compatibility problems.
 As Janus is experimental, the recommended way to try it is to build it from
 source.
 
-Download Janus source code:
-
 ```
-go get github.com/dcb9/janus
+go get github.com/qtumproject/janus/cli/janus
 ```
-
-Enter the project root:
-
-```
-cd $GOPATH/src/github.com/dcb9/janus
-```
-
-Build the Janus binary:
-
-```
-go build -o janus cli/janus/main.go
-```
-
-The `janus` binary should be available at project root.
 
 # Running Janus and Qtum RPC
 
