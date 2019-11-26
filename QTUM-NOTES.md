@@ -112,7 +112,7 @@ curl -X POST -d \
 '{"jsonrpc":"2.0",
  "method":"eth_accounts",
   "params":
-    ["0x7926223070547d2d15b2ef5e7383e541c338ffe9", "latest"],
+    [],
   "id":1
 }' http://127.0.0.1:23889
 
