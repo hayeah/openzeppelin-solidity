@@ -25,26 +25,6 @@ source.
 go get github.com/qtumproject/janus/cli/janus
 ```
 
-# Running Janus and Qtum RPC
-
-Run Qtum RPC (in regtest mode) on port 3889:
-
-```bash
-qtumd -regtest \
- -rpcbind=0.0.0.0:3889 -rpcallowip=0.0.0.0/0 \
- -datadir=.qtum \
- -logevents \
- -rpcuser=qtum -rpcpassword=testpasswd \
- -deprecatedrpc=accounts \
- -printtoconsole
-```
-
-Run Janus on port 23889, which will proxy ETH RPC requests to Qtum RPC:
-
-```
-QTUM_RPC=http://qtum:testpasswd@localhost:3889 QTUM_NETWORK=regtest janus --dev
-```
-
 # Create Test Accounts
 
 Create an alias to invoke qtum-cli with the specified RPC credentials:
@@ -86,6 +66,42 @@ qcli gethexaddress qUbxboqjBRp96j3La8D1RYkyqx5uQbJPoW
 # 2352be3db3177f0a07efbe6da5857615b8c9901d
 qcli gethexaddress qLn9vqbr2Gx3TsVR9QyTVB5mrMoh4x43Uf
 ```
+
+Let's convert all these addresses to hex, and save them in the file "myaccounts.txt":
+
+
+```
+7926223070547d2d15b2ef5e7383e541c338ffe9
+2352be3db3177f0a07efbe6da5857615b8c9901d
+69b004ac2b3993bf2fdf56b02746a1f57997420d
+8c647515f03daeefd09872d7530fa8d8450f069a
+2191744eb5ebeac90e523a817b77a83a0058003b
+88b0bf4b301c21f8a47be2188bad6467ad556dcf
+```
+
+We'll start Janus to use these addresses as our test accounts.
+
+# Running Janus and Qtum RPC
+
+Run Qtum RPC (in regtest mode) on port 3889:
+
+```bash
+qtumd -regtest \
+ -rpcbind=0.0.0.0:3889 -rpcallowip=0.0.0.0/0 \
+ -datadir=.qtum \
+ -logevents \
+ -rpcuser=qtum -rpcpassword=testpasswd \
+ -deprecatedrpc=accounts \
+ -printtoconsole
+```
+
+Run Janus on port 23889, which will proxy ETH RPC requests to Qtum RPC:
+
+```
+QTUM_RPC=http://qtum:testpasswd@localhost:3889 QTUM_NETWORK=regtest janus --accounts myaccounts.txt --dev
+```
+
+* `--accounts`: specify a list of addresses that will be returned by the eth_accounts call. This file should contain the addresses we've used to generate coins to.
 
 # Test Janus RPC calls
 
