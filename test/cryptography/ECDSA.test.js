@@ -9,12 +9,16 @@ contract('ECDSA', function ([_, other]) {
     this.ecdsa = await ECDSAMock.new();
   });
 
-  const SIGNER = '0x916dd26cf371a24e648ad392cd32a7e5d1ad9a48';
-  const TEST_MSG_HASH = '0x61594ff4caaed52fb458bd4fe9e655689a957812dcba731111564d92e66a9307';
   const TEST_MSG_HASH_BAD = '0x62594ff4caaed52fb458bd4fe9e655689a957812dcba731111564d92e66a9307';
 
-  const R = 'ed5ed25127d4e110fa8d962ef2999f69219cd4184234f4d059180c153e18596f';
-  const S = '7d9e9cf3e142ba25b021688aceae2f7b3ff2fed4fff84e2e41432aece274849c';
+  // private key: cMbgxCJrTYUqgcmiC1berh5DFrtY1KeU4PXZ6NZxgenniF1mXCRk
+  // public key: qUbxboqjBRp96j3La8D1RYkyqx5uQbJPoW
+  // message: "hello world"
+
+  const SIGNER = '0x7926223070547d2d15b2ef5e7383e541c338ffe9';
+  const TEST_MSG_HASH = '0x33fd9f69e51a562f5457e71dcf14bd723cdc9134bae6cdef5891baa8386ebb5c';
+  const R = '3595e4f92e91aaf731127b43aceec0848948848421800660b7f8ace50b668a4b';
+  const S = '4ed3bad5a93f1c1685c50958efe40fd566b8afdb0b2ef679013277506380ce1f';
 
   context('recover with valid signature', function () {
     context('with v0 signature', function () {
