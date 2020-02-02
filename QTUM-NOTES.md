@@ -59,7 +59,6 @@ qcli generatetoaddress 500 qW28njWueNpBXYWj2KDmtFG2gbLeALeHfV
 
 Let's save these keys in the file "myaccounts.txt":
 
-
 ```
 cMbgxCJrTYUqgcmiC1berh5DFrtY1KeU4PXZ6NZxgenniF1mXCRk
 cRcG1jizfBzHxfwu68aMjhy78CpnzD9gJYZ5ggDbzfYD3EQfGUDZ
@@ -72,18 +71,12 @@ cTs5NqY4Ko9o6FESHGBDEG77qqz9me7cyYCoinHcWEiqMZgLC6XY
 Note that the base58 addresses correspond to the following hex addresses
 
 ```
-{
-  "id": 1,
-  "jsonrpc": "2.0",
-  "result": [
-    "0x7926223070547d2d15b2ef5e7383e541c338ffe9",
-    "0x2352be3db3177f0a07efbe6da5857615b8c9901d",
-    "0x69b004ac2b3993bf2fdf56b02746a1f57997420d",
-    "0x8c647515f03daeefd09872d7530fa8d8450f069a",
-    "0x2191744eb5ebeac90e523a817b77a83a0058003b",
-    "0x88b0bf4b301c21f8a47be2188bad6467ad556dcf"
-  ]
-}
+0x7926223070547d2d15b2ef5e7383e541c338ffe9
+0x2352be3db3177f0a07efbe6da5857615b8c9901d
+0x69b004ac2b3993bf2fdf56b02746a1f57997420d
+0x8c647515f03daeefd09872d7530fa8d8450f069a
+0x2191744eb5ebeac90e523a817b77a83a0058003b
+0x88b0bf4b301c21f8a47be2188bad6467ad556dcf
 ```
 
 We'll start Janus to use these addresses as our test accounts.
@@ -108,7 +101,7 @@ Run Janus on port 23889, which will proxy ETH RPC requests to Qtum RPC:
 QTUM_RPC=http://qtum:testpasswd@localhost:3889 QTUM_NETWORK=regtest janus --accounts myaccounts.txt --dev
 ```
 
-* `--accounts`: specify a list of addresses that will be returned by the eth_accounts call. This file should contain the addresses we've used to generate coins to.
+- `--accounts`: specify a list of addresses that will be returned by the eth_accounts call. This file should contain the addresses we've used to generate coins to.
 
 # Test Janus RPC calls
 
@@ -139,8 +132,39 @@ curl -X POST -d \
   "id":1
 }' http://127.0.0.1:23889
 
-{"jsonrpc":"2.0","result":["0x2352be3db3177f0a07efbe6da5857615b8c9901d","0x7926223070547d2d15b2ef5e7383e541c338ffe9"],"id":1}
+{
+  "jsonrpc": "2.0",
+  "result": [
+    "0x7926223070547d2d15b2ef5e7383e541c338ffe9",
+    "0x2352be3db3177f0a07efbe6da5857615b8c9901d",
+    "0x69b004ac2b3993bf2fdf56b02746a1f57997420d",
+    "0x8c647515f03daeefd09872d7530fa8d8450f069a",
+    "0x2191744eb5ebeac90e523a817b77a83a0058003b",
+    "0x88b0bf4b301c21f8a47be2188bad6467ad556dcf"
+  ],
+  "id": 1
+}
 ```
+
+Sign a message using [eth_sign](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign):
+
+```
+curl -X POST -d \
+'{"jsonrpc":"2.0",
+ "method":"eth_sign",
+  "params":
+    ["0x7926223070547d2d15b2ef5e7383e541c338ffe9", "0x68656c6c6f20776f726c64"],
+  "id":1
+}' http://127.0.0.1:23889
+
+{
+  "jsonrpc": "2.0",
+  "result": "0x1f3595e4f92e91aaf731127b43aceec0848948848421800660b7f8ace50b668a4b4ed3bad5a93f1c1685c50958efe40fd566b8afdb0b2ef679013277506380ce1f",
+  "id": 1
+}
+```
+
+- "0x68656c6c6f20776f726c64" is the ascii string "hello world"
 
 # Truffle Tests
 
