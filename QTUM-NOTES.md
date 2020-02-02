@@ -57,26 +57,33 @@ qcli generatetoaddress 500 qLcshhsRS6HKeTKRYFdpXnGVZxw96QQcfm
 qcli generatetoaddress 500 qW28njWueNpBXYWj2KDmtFG2gbLeALeHfV
 ```
 
+Let's save these keys in the file "myaccounts.txt":
+
+
+```
+cMbgxCJrTYUqgcmiC1berh5DFrtY1KeU4PXZ6NZxgenniF1mXCRk
+cRcG1jizfBzHxfwu68aMjhy78CpnzD9gJYZ5ggDbzfYD3EQfGUDZ
+cV79qBoCSA2NDrJz8S3T7J8f3zgkGfg4ua4hRRXfhbnq5VhXkukT
+cV93kaaV8hvNqZ711s2z9jVWLYEtwwsVpyFeEZCP6otiZgrCTiEW
+cVPHpTvmv3UjQsZfsMRrW5RrGCyTSAZ3MWs1f8R1VeKJSYxy5uac
+cTs5NqY4Ko9o6FESHGBDEG77qqz9me7cyYCoinHcWEiqMZgLC6XY
+```
+
 Note that the base58 addresses correspond to the following hex addresses
 
 ```
-# 7926223070547d2d15b2ef5e7383e541c338ffe9
-qcli gethexaddress qUbxboqjBRp96j3La8D1RYkyqx5uQbJPoW
-
-# 2352be3db3177f0a07efbe6da5857615b8c9901d
-qcli gethexaddress qLn9vqbr2Gx3TsVR9QyTVB5mrMoh4x43Uf
-```
-
-Let's convert all these addresses to hex, and save them in the file "myaccounts.txt":
-
-
-```
-7926223070547d2d15b2ef5e7383e541c338ffe9
-2352be3db3177f0a07efbe6da5857615b8c9901d
-69b004ac2b3993bf2fdf56b02746a1f57997420d
-8c647515f03daeefd09872d7530fa8d8450f069a
-2191744eb5ebeac90e523a817b77a83a0058003b
-88b0bf4b301c21f8a47be2188bad6467ad556dcf
+{
+  "id": 1,
+  "jsonrpc": "2.0",
+  "result": [
+    "0x7926223070547d2d15b2ef5e7383e541c338ffe9",
+    "0x2352be3db3177f0a07efbe6da5857615b8c9901d",
+    "0x69b004ac2b3993bf2fdf56b02746a1f57997420d",
+    "0x8c647515f03daeefd09872d7530fa8d8450f069a",
+    "0x2191744eb5ebeac90e523a817b77a83a0058003b",
+    "0x88b0bf4b301c21f8a47be2188bad6467ad556dcf"
+  ]
+}
 ```
 
 We'll start Janus to use these addresses as our test accounts.
