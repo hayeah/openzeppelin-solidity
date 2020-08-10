@@ -290,6 +290,40 @@ As well as the QTUM RPC requests and responses:
 }
 ```
 
+# Truffle Config
+
+If you are using this for your own truffle project, edit `truffle-config.js` development network as follows:
+
+```
+module.exports = {
+  networks: {
+    development: {
+      host: '127.0.0.1',
+      port: 23889, // janus QTUM-ETH RPC bridge
+      network_id: '*', // eslint-disable-line camelcase
+      from: '0x7926223070547d2d15b2ef5e7383e541c338ffe9',
+      gasPrice: '0x64', // minimal gas for qtum
+    },
+    // development: {
+    //   host: '127.0.0.1',
+    //   port: 8545, // ganache
+    //   network_id: '*', // eslint-disable-line camelcase
+    //   // from: '0x7926223070547d2d15b2ef5e7383e541c338ffe9',
+    //   // gasPrice: '0x64', // minimal gas for qtum
+    // },
+    coverage: {
+      host: 'localhost',
+      network_id: '*', // eslint-disable-line camelcase
+      port: 8555,
+      gas: 0xfffffffffff,
+      gasPrice: 0x01,
+    },
+  },
+
+  // ...
+};
+```
+
 # Next
 
 We are working on making as many of the OpenZeppelin tests pass as possible, and we welcome your help!
